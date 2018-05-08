@@ -26,6 +26,19 @@ export class ChatRoomPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
   private socket:Socket,private toastCtrl:ToastController) {
     this.nickname = this.navParams.get('nickname');
+ 
+    this.getMessages().subscribe(message => {
+      this.messages.push(message);
+    });
+ 
+    this.getUsers().subscribe(data => {
+      let user = data['user'];
+      if (data['event'] === 'left') {
+        this.showToast('User left: ' + user);
+      } else {
+        this.showToast('User joined: ' + user);
+      }
+    });
   }
 
   ionViewDidLoad() {
@@ -40,6 +53,7 @@ export class ChatRoomPage {
   getMessages(){
     let observable = new Observable(observer => {
       this.socket.on('message',(data) => {
+        console.log(data);
         observer.next(data);
       })
     })
@@ -48,7 +62,7 @@ export class ChatRoomPage {
 
   getUsers(){
     let observable = new Observable(observer => {
-      this.socket.on('users.changed',(data)=>{
+      this.socket.on('users-changed',(data)=>{
         observer.next(data);
       })
     })

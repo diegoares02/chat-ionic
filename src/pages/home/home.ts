@@ -19,6 +19,7 @@ export class HomePage {
 
   joinChat() {
     this.socket.connect();
+    console.log('Conectado al servidor');
     this.socket.emit('set-nickname', this.nickname);
     this.navCtrl.push('ChatRoomPage', { nickname: this.nickname });
   }
