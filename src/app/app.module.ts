@@ -9,7 +9,7 @@ import { HomePage } from '../pages/home/home';
 
 //Import socket library
 import { SocketIoConfig, SocketIoModule } from "ng-socket-io";
-const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
+const config: SocketIoConfig = { url: 'https://chat-ionic-server.herokuapp.com/', options: {} };
 
 @NgModule({
   declarations: [
